@@ -40,7 +40,7 @@ def holiday():
 def news():
     items = News.recent()
     last_time_int = items[0].time_int
-    print(items[0])
+    # print(items[0])
     return render_template('news.html', items=items, last_time_int=last_time_int)
 
 
