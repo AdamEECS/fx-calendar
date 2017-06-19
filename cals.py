@@ -74,9 +74,9 @@ def timer(delta, procedure):
 
 def main():
     print('start')
-    # timer(60, update_event)
+    timer(60, update_event)
     # init_event()
-    get_detail()
+    # get_detail()
 
 
 if __name__ == '__main__':
