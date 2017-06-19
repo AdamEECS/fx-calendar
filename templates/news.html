@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <h1>News</h1>
+
+    <div class="container-fluid table-hover">
+
+        <div class="row event-title">
+            <div class="col-sm-2">市场数据</div>
+
+        </div>
+
+        <div class="news-container" data-last-time-int="{{ last_time_int }}">
+
+            {% for i in items %}
+
+                <div class="item-container" data-time-int={{ i.time_int }}>
+                    <div class="event-item row">
+
+                        <div>{{ i.time_show }}</div>
+                        <div>{{ i.title_content | safe }}</div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+    <script>
+        const log = console.log.bind(console)
+
+        const template = function (news) {
+            let t = `
+                <div class="item-container" data-time-int=${ news.time_int }>
+                    <div class="event-item row">
+
+                        <div>${ news.time_show }</div>
+                        <div>${ news.title_content }</div>
+
+                    </div>
+
+                </div>`
+            return t
+        }
+
+        const newsContainer = $('.news-container')
+
+        const dataAfter = function (lastTimeInt) {
+            let request = {
+                url: '/fx/news/after/' + lastTimeInt,
+                type: 'get',
+                contentType: 'application/json',
+                success: function (r) {
+                    r = JSON.parse(r)
+                    console.log(r)
+                    if (r.length === 0) {
+                        return false
+                    }
+                    let newLastTimeInt = r.slice(-1)[0].time_int
+                    log('newLast', newLastTimeInt)
+                    newsContainer.data('last-time-int', newLastTimeInt)
+                    for (let i = 0; i < r.length; i++) {
+                        let news = r[i]
+                        let t = template(news)
+                        $(t).prependTo(newsContainer).hide().slideDown(600)
+                    }
+                },
+                error: function (err) {
+                    log('error', err);
+                }
+            };
+            $.ajax(request)
+        }
+
+        const getNewData = function () {
+            let lastTimeInt = newsContainer.data('last-time-int')
+            log(lastTimeInt)
+            dataAfter(lastTimeInt)
+        }
+
+        let timer = setInterval(function () {
+            getNewData()
+        }, 1000)
+    </script>
+{% endblock %}

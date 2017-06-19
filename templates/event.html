@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <h1>FX Events</h1>
+
+    <form class="navbar-form " action="{{ url_for('index.events_search') }}" method="post">
+        开始时间
+        <input type="date" class="form-control" name="start" placeholder="开始时间">
+        结束时间
+        <input type="date" class="form-control" name="end" placeholder="结束时间">
+        <input type="text" class="form-control" name="country" placeholder="地区">
+        <input type="text" class="form-control" name="title" placeholder="事件">
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+
+    <div class="container-fluid table-hover">
+
+        <div class="row event-title">
+            <div class="col-sm-2">时间</div>
+            <div class="col-sm-1">地区</div>
+            <div class="col-sm-5">事件</div>
+            <div class="col-sm-1">重要性</div>
+            <div class="col-sm-1">今值</div>
+            <div class="col-sm-1">预期</div>
+            <div class="col-sm-1">前值</div>
+        </div>
+
+        {% for i in items %}
+
+            <div class="item-container">
+                <div class="event-item row
+                {% if i.detail %}
+                    event-has-detail
+                {% endif %}
+                ">
+                    <div class="col-sm-2">{{ i.timestamp | time_str }}</div>
+                    <div class="col-sm-1">{{ i.country }}</div>
+                    <div class="col-sm-5">{{ i.title }}</div>
+                    <div class="col-sm-1">{{ i.importance }}</div>
+                    <div class="col-sm-1">{{ i.actual }}</div>
+                    <div class="col-sm-1">{{ i.forecast }}</div>
+                    <div class="col-sm-1">{{ i.previous }}</div>
+                </div>
+                {% if i.detail %}
+                    <div class="event-detail row" hidden>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div>下次公布时间：{{ i.detail.next_fab_time | time_str }}</div>
+                                <div>数据发布机构：{{ i.detail.public_organization }}</div>
+                                <div>发布频率：{{ i.detail.release_frequency }}</div>
+                                <div>统计方法：{{ i.detail.statistical_method }}</div>
+                                <h4>数据影响</h4>
+                                <div>{{ i.detail.data_influence }}</div>
+                                <h4>数据释义</h4>
+                                <div>{{ i.detail.data_paraphrase }}</div>
+                                <h4>关注理由</h4>
+                                <div>{{ i.detail.focus_reason }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+
+    </div>
+    <script>
+        $('.event-has-detail').click(function (event) {
+            var self = $(event.target)
+            var parent = self.closest('.item-container')
+            var detail = parent.find('.event-detail')
+            detail.toggle()
+        })
+    </script>
+{% endblock %}
