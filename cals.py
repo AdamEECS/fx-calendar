@@ -26,6 +26,7 @@ def get_event(start=1496246400, delta=604800):
     r = requests.get(url, headers=headers)
     r = r.content.decode(encoding='utf-8')
     r = json.loads(r)
+    print(r)
     data = r.get('data')
     print(data)
     items = data.get('items')
