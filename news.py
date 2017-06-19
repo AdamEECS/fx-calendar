@@ -4,6 +4,8 @@ import requests
 from uuid import uuid4
 from models.test import Test
 from models.news import News
+from usr_util.utils import timestamp
+from usr_util.utils import time_str
 
 from urllib.parse import urlencode
 
@@ -72,7 +74,10 @@ def fuck():
 def timer(delta, procedure):
     while True:
         # print(int(time.time()))
-        procedure()
+        try:
+            procedure()
+        except requests.exceptions.ConnectionError as e:
+            print(time_str(timestamp()), 'error', e)
         time.sleep(delta)
 
 
@@ -91,7 +96,7 @@ def insert_data():
 
 def main():
     print('start')
-    timer(1, fuck_get)
+    timer(3, fuck_get)
     # print_data()
     # insert_data()
 
