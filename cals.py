@@ -24,15 +24,11 @@ headers = {
 def get_event(start=1496246400, delta=604800):
     url = 'https://api-prod.wallstreetcn.com/apiv1/finfo/calendars?start={}&end={}'.format(start, start + delta)
     r = requests.get(url, headers=headers)
-    print(r.content)
     r = r.content.decode(encoding='utf-8')
-    print(r)
     r = json.loads(r)
     print(r)
     data = r.get('data')
-    print(data)
     items = data.get('items')
-    print(r)
     for i in items:
         # print(i)
         Event.insert_db(i)
@@ -79,8 +75,8 @@ def timer(delta, procedure):
 def main():
     print('start')
     # timer(60, update_event)
-    init_event()
-    # get_detail()
+    # init_event()
+    get_detail()
 
 
 if __name__ == '__main__':
