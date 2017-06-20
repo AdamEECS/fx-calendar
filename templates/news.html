@@ -51,6 +51,7 @@
             let request = {
                 url: '/fx/news/after/' + lastTimeInt,
                 type: 'get',
+                timeout: 999,
                 contentType: 'application/json',
                 success: function (r) {
                     r = JSON.parse(r)
@@ -82,6 +83,6 @@
 
         let timer = setInterval(function () {
             getNewData()
-        }, 3000)
+        }, 1000)
     </script>
 {% endblock %}

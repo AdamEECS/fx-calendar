@@ -6,6 +6,8 @@ from models.test import Test
 from models.event import Event
 from models.detail import Detail
 from usr_util.utils import timestamp_today
+from usr_util.utils import timestamp, time_str
+
 
 from urllib.parse import urlencode
 
@@ -68,13 +70,16 @@ def update_event():
 def timer(delta, procedure):
     while True:
         # print(int(time.time()))
-        procedure()
+        try:
+            procedure()
+        except BaseException as e:
+            print(time_str(timestamp()), 'error', e)
         time.sleep(delta)
 
 
 def main():
     print('start')
-    timer(60, update_event)
+    timer(10, update_event)
     # init_event()
     # get_detail()
 

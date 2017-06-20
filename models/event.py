@@ -42,6 +42,17 @@ class Event(MongoModel):
         return m
 
     @classmethod
+    def find_and(cls, args):
+        search = {"$and": []}
+        for i in args:
+            i['deleted'] = i.pop('deleted', False)
+            search['$and'].append(i)
+        search['__sort'] = 'timestamp'
+        # print('event search', search)
+        ds = cls.find(**search)
+        return ds
+
+    @classmethod
     def already_have_one(cls, form):
         title = form.get('title')
         timestamp = form.get('timestamp')
