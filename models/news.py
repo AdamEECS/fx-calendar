@@ -73,6 +73,12 @@ class News(MongoModel):
         return data
 
     @classmethod
+    def top(cls):
+        data = cls.recent(limit=1)
+        data = data[0]
+        return data
+
+    @classmethod
     def after(cls, last_time_int, limit=50):
         param = dict(
             __sort=[('time_int', 1)],
@@ -81,3 +87,10 @@ class News(MongoModel):
         data = cls.find(**param)
         data = data[:limit]
         return data
+
+    def blacklist(self):
+        b = [
+            'url',
+        ]
+        b.extend(super().blacklist())
+        return b

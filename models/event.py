@@ -67,3 +67,10 @@ class Event(MongoModel):
         else:
             m.update(form)
         return m
+
+    def blacklist(self):
+        b = [
+            'flagURL',
+        ]
+        b.extend(super().blacklist())
+        return b

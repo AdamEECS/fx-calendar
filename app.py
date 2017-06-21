@@ -10,10 +10,10 @@ manager = Manager(app)
 
 def register_routes(app):
     from routes.index import main as routes_index
-    # from routes.spider import main as routes_spider
+    from routes.api import main as routes_api
 
     app.register_blueprint(routes_index, url_prefix='/fx')
-    # app.register_blueprint(routes_spider, url_prefix='/spider')
+    app.register_blueprint(routes_api, url_prefix='/api')
 
 
 def register_filters(app):
