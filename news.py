@@ -36,29 +36,44 @@ def news_clear(news):
     return True
 
 
-def get_news():
+def get_news(max_time):
     url_base = 'https://view.jin10.com/flash?'
-    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     param = dict(
         jsonpCallback='jQuery1111019658170263181396_1497502825614',
-        max_time=now,
+        max_time=max_time,
         _=1497502825618,
     )
     url = url_base + urlencode(param)
+
     r = requests.get(url, headers=headers)
     r = r.content.decode(encoding='utf-8')
-    r = r.split('(', 1)[1][:-2]
-    r = json.loads(r)
-    data = r.get('data')
-    # print(data)
-    for i in data:
-        if news_clear(i):
-            i['time_int'] = int(time.mktime(time.strptime(i.get('time_show'), '%Y-%m-%d %H:%M:%S')))
-            News.insert_db(i)
+    try:
+        r = r.split('(', 1)[1][:-2]
+        r = json.loads(r)
+        data = r.get('data')
+        # print(data)
+        for i in data:
+            if news_clear(i):
+                i['time_int'] = int(time.mktime(time.strptime(i.get('time_show'), '%Y-%m-%d %H:%M:%S')))
+                News.insert_db(i)
+    except BaseException as e:
+        print('e', e)
+        # print('r', r)
 
 
 def fuck_get():
-    get_news()
+    now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    get_news(now)
+
+
+def fuck_get_p():
+    t_stamp = int(time.time())
+    # print(t_stamp)
+    while t_stamp > 1496246400:
+        now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t_stamp))
+        # print(now)
+        get_news(now)
+        t_stamp -= 3600
 
 
 def fuck():
@@ -97,6 +112,7 @@ def insert_data():
 def main():
     print('start')
     timer(3, fuck_get)
+    # fuck_get_p()
     # print_data()
     # insert_data()
 
