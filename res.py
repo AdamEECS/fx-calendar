@@ -6,8 +6,10 @@ __author__ = '3000'
 
 
 def auto_restart():
-    s = 'supervisorctl restart all'
-    os.system(s)
+    s1 = 'supervisorctl restart news'
+    s2 = 'supervisorctl restart cals'
+    os.system(s1)
+    os.system(s2)
     with open("log_restart.txt", 'a+', encoding='utf8') as f:
         f.write('{}: restart'.format(time_str(timestamp())))
 
