@@ -11,7 +11,7 @@ def auto_restart():
     os.system(s1)
     os.system(s2)
     with open("log_restart.txt", 'a+', encoding='utf8') as f:
-        f.write('{}: restart'.format(time_str(timestamp())))
+        f.write('{}: restart \n'.format(time_str(timestamp())))
 
 
 def timer(delta, procedure):
