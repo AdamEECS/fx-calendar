@@ -47,8 +47,8 @@ class News(MongoModel):
     @classmethod
     def new(cls, form):
         news_id = form.pop('id', -1)
-        # print(time_str(timestamp()))
-        print('*** new:', form)
+        print(time_str(timestamp()))
+        # print('*** new:', form)
         m = super().new(form)
         m.news_id = news_id
         m.save()
