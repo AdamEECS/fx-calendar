@@ -26,7 +26,7 @@ def timer(delta, procedure):
 
 def main():
     print('start')
-    timer(24 * 60, auto_restart)
+    timer(24 * 3600, auto_restart)
     # auto_restart()
 
 
