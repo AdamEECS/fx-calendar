@@ -11,9 +11,11 @@ manager = Manager(app)
 def register_routes(app):
     from routes.index import main as routes_index
     from routes.api import main as routes_api
+    from routes.api_jsonp import main as routes_jsonp
 
     app.register_blueprint(routes_index, url_prefix='/fx')
     app.register_blueprint(routes_api, url_prefix='/api')
+    app.register_blueprint(routes_jsonp, url_prefix='/jsonp')
 
 
 def register_filters(app):
