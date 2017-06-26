@@ -2,6 +2,7 @@ from . import *
 from models.event import Event
 from models.detail import Detail
 from models.news import News
+from models.rate import Rate
 import datetime
 
 main = Blueprint('api', __name__)
@@ -62,5 +63,12 @@ def news_top():
 @main.route('/news/after/<int:last_time_int>', methods=['GET'])
 def news_after(last_time_int):
     items = News.after(last_time_int)
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4)
+
+
+@main.route('/rates', methods=['GET'])
+def rates():
+    items = Rate.all()
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)

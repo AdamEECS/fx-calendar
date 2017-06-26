@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <h1>Rates</h1>
+
+    <div class="container-fluid table-hover">
+
+        <div class="row event-title">
+            <div class="col-sm-4">央行</div>
+            <div class="col-sm-4">利率</div>
+            <div class="col-sm-4">下次会议</div>
+        </div>
+
+        {% for i in items %}
+
+            <div class="item-container">
+                <div class="event-item row">
+                    <div class="col-sm-4">{{ i.title }}</div>
+                    <div class="col-sm-4">{{ i.rate }}</div>
+                    <div class="col-sm-4">{{ i.next_meeting_at }}</div>
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

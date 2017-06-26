@@ -2,6 +2,7 @@ from . import *
 from models.event import Event
 from models.detail import Detail
 from models.news import News
+from models.rate import Rate
 import datetime
 
 main = Blueprint('index', __name__)
@@ -50,3 +51,8 @@ def news_after(last_time_int):
     items = [i.json() for i in items]
     return json.dumps(items)
 
+
+@main.route('/rates', methods=['GET'])
+def rates():
+    rs = Rate.all()
+    return render_template('rates.html', items=rs)
