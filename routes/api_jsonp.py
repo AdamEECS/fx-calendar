@@ -40,7 +40,10 @@ def events():
 @support_jsonp
 def events_search():
     form = request.args
-    items = Event.search_and(form)
+    form_search = form.to_dict()
+    form_search.pop('_')
+    form_search.pop('callback')
+    items = Event.search_and(form_search)
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)
 
