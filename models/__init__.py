@@ -139,7 +139,7 @@ class User(MongoModel):
         for i in args:
             i['deleted'] = i.pop('deleted', False)
             search['$and'].append(i)
-        print(search)
+        # print(search)
         ds = db[name].find(search)
         l = [cls._new_with_bson(d) for d in ds]
         return l
@@ -158,20 +158,20 @@ class User(MongoModel):
     @classmethod
     def search_and(cls, form):
         search = []
-        print(form)
+        # print(form)
         for k, v in form.items():
             if len(v) > 0:
                 if k == 'start':
                     start_timestamp = int(datetime.strptime(v, '%Y-%m-%d').timestamp())
-                    print('start', start_timestamp)
+                    # print('start', start_timestamp)
                     search.append({'timestamp': {'$gte': start_timestamp}})
                 elif k == 'end':
                     end_timestamp = int(datetime.strptime(v, '%Y-%m-%d').timestamp())
-                    print('end', end_timestamp)
+                    # print('end', end_timestamp)
                     search.append({'timestamp': {'$lt': end_timestamp}})
                 else:
                     search.append({k: {'$regex': v, '$options': '$i'}})
-        print(search)
+        # print(search)
         if len(search) > 0:
             return cls.find_and(search)
         else:
