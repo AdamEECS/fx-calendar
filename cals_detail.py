@@ -96,9 +96,9 @@ def show_history():
 
 def main():
     print('start')
-    # timer(10, update_event)
+    timer(24 * 3600, update_detail)
     # init_event()
-    init_detail()
+    # init_detail()
     # show_history()
 
 

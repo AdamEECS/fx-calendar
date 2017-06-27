@@ -8,7 +8,6 @@ from models.detail import Detail
 from usr_util.utils import timestamp_today
 from usr_util.utils import timestamp, time_str
 
-
 from urllib.parse import urlencode
 
 __author__ = '3000'
@@ -23,6 +22,11 @@ headers = {
 }
 
 
+def log(*args):
+    with open("log_cals.txt", 'a+', encoding='utf8') as f:
+        print(time_str(timestamp()), *args, file=f)
+
+
 def get_event(start=1496246400, delta=604800):
     url = 'https://api-prod.wallstreetcn.com/apiv1/finfo/calendars?start={}&end={}'.format(start, start + delta)
     r = requests.get(url, headers=headers)
@@ -34,23 +38,6 @@ def get_event(start=1496246400, delta=604800):
     for i in items:
         # print(i)
         Event.insert_db(i)
-
-
-def get_detail():
-    url_base = 'https://api-prod.wallstreetcn.com/apiv1/finfo/ticker/detail?ticker='
-    events = Event.all()
-    for i in events:
-        if 'Index' in i.ticker and not Detail.has(ticker=i.ticker):
-            query = i.ticker
-            query = query.replace(' ', '+')
-            url = url_base + query
-            r = requests.get(url, headers=headers)
-            r = r.content.decode(encoding='utf-8')
-            r = json.loads(r)
-            data = r.get('data')
-            # print(data)
-            if data:
-                Detail.insert_db(data)
 
 
 def init_event():
@@ -71,17 +58,18 @@ def timer(delta, procedure):
     while True:
         # print(int(time.time()))
         try:
+            log('**************** procedure *****************')
             procedure()
         except BaseException as e:
             print(time_str(timestamp()), 'error', e)
+            log('[timer e]', e)
         time.sleep(delta)
 
 
 def main():
     print('start')
-    timer(10, update_event)
+    timer(60, update_event)
     # init_event()
-    # init_detail()
 
 
 if __name__ == '__main__':
