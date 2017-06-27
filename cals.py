@@ -81,7 +81,7 @@ def main():
     print('start')
     timer(10, update_event)
     # init_event()
-    # get_detail()
+    # init_detail()
 
 
 if __name__ == '__main__':

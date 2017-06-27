@@ -3,6 +3,7 @@ from models.event import Event
 from models.detail import Detail
 from models.news import News
 from models.rate import Rate
+from models.history import History
 import datetime
 
 main = Blueprint('index', __name__)
@@ -10,16 +11,11 @@ main = Blueprint('index', __name__)
 
 @main.route('/')
 def index():
-    start = datetime.date.today().strftime("%Y-%m-%d")
-    end_dt = datetime.date.today() + datetime.timedelta(days=1)
-    end = end_dt.strftime("%Y-%m-%d")
-    form = dict(
-        start=start,
-        end=end,
-    )
-    items = Event.search_and(form)
+    items = Event.today()
     for i in items:
         i.detail = Detail.find_one(ticker=i.ticker)
+        history = History.recent_by_ticker(ticker=i.ticker)
+        i.history = [h.json() for h in history]
     return render_template('event.html', items=items)
 
 
@@ -29,6 +25,8 @@ def events_search():
     items = Event.search_and(form)
     for i in items:
         i.detail = Detail.find_one(ticker=i.ticker)
+        history = History.recent_by_ticker(ticker=i.ticker)
+        i.history = [h.json() for h in history]
     return render_template('event.html', items=items)
 
 

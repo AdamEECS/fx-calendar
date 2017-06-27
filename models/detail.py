@@ -28,8 +28,8 @@ class Detail(MongoModel):
 
     @classmethod
     def insert_db(cls, form):
-        id = int(form.get('id'))
-        m = cls.get(id)
+        ticker = form.get('ticker', '')
+        m = cls.find_one(ticker=ticker)
         if m is None:
             cls.new(form)
         else:

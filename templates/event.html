@@ -45,6 +45,9 @@
                     <div class="event-detail row" hidden>
                         <div class="panel panel-default">
                             <div class="panel-body">
+
+                                <div class="chart" style="width: 700px;height:400px;"
+                                     data-history="{{ i.history }}" data-title="{{ i.title }}"></div>
                                 <div>下次公布时间：{{ i.detail.next_fab_time | time_str }}</div>
                                 <div>数据发布机构：{{ i.detail.public_organization }}</div>
                                 <div>发布频率：{{ i.detail.release_frequency }}</div>
@@ -70,6 +73,56 @@
             var parent = self.closest('.item-container')
             var detail = parent.find('.event-detail')
             detail.toggle()
+            var chart = detail.find('.chart')
+            var historyData = chart.data('history')
+            var data = eval(historyData)
+            var date = data.map(function (i) {
+                return i.human_date.split(' ')[0]
+            })
+            var actual = data.map(function (i) {
+                return i.actual
+            })
+            var forecast = data.map(function (i) {
+                return i.forecast
+            })
+            var title = chart.data('title')
+            var myChart = echarts.init(chart[0]);
+
+            var option = {
+                title: {
+                    text: title,
+                    subtext: '数据来源：AGM 数据中心'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['预测值', '实际值']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataView: {readOnly: false},
+                        magicType: {type: ['line', 'bar']},
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    data: date
+                },
+                yAxis: {},
+                series: [{
+                    name: '预测值',
+                    type: 'line',
+                    data: forecast
+                }, {
+                    name: '实际值',
+                    type: 'line',
+                    data: actual
+                }]
+            };
+
+            myChart.setOption(option);
         })
     </script>
 {% endblock %}

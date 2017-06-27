@@ -74,3 +74,16 @@ class Event(MongoModel):
         ]
         b.extend(super().blacklist())
         return b
+
+    @classmethod
+    def today(cls):
+        import datetime
+        start = datetime.date.today().strftime("%Y-%m-%d")
+        end_dt = datetime.date.today() + datetime.timedelta(days=1)
+        end = end_dt.strftime("%Y-%m-%d")
+        form = dict(
+            start=start,
+            end=end,
+        )
+        items = cls.search_and(form)
+        return items
