@@ -21,9 +21,9 @@ headers = {
 }
 
 
-def log(*args, **kwargs):
+def log(*args):
     with open("log_news.txt", 'a+', encoding='utf8') as f:
-        print(time_str(timestamp()), *args, **kwargs, file=f)
+        print(time_str(timestamp()), *args, file=f)
 
 
 def news_clear(news):
