@@ -21,6 +21,11 @@ headers = {
 }
 
 
+def log(*args, **kwargs):
+    with open("log_news.txt", 'a+', encoding='utf8') as f:
+        print(time_str(timestamp()), *args, **kwargs, file=f)
+
+
 def news_clear(news):
     black_list = [
         '<a',
@@ -47,6 +52,7 @@ def get_news(max_time):
 
     r = requests.get(url, headers=headers)
     r = r.content.decode(encoding='utf-8')
+    log(r)
     try:
         r = r.split('(', 1)[1][:-2]
         r = json.loads(r)
@@ -58,6 +64,7 @@ def get_news(max_time):
                 News.insert_db(i)
     except BaseException as e:
         print('e', e)
+        log('[get_news e]', e)
         # print('r', r)
 
 
@@ -76,45 +83,22 @@ def fuck_get_p():
         t_stamp -= 3600
 
 
-def fuck():
-    print('fuck')
-    param = dict(
-        content=str(uuid4()),
-        long=12345678901234567890,
-    )
-    n = Test().new(param)
-    print(n)
-
-
 def timer(delta, procedure):
     while True:
         # print(int(time.time()))
         try:
+            log('**************** procedure *****************')
             procedure()
         except requests.exceptions.ConnectionError as e:
             print(time_str(timestamp()), 'error', e)
+            log('[timer e]', e)
         time.sleep(delta)
-
-
-def print_data():
-    d = News.after(1497571351)
-    print(d)
-
-
-def insert_data():
-    form = dict(
-        content='test',
-    )
-    d = News.new(form)
-    print(d)
 
 
 def main():
     print('start')
     timer(3, fuck_get)
     # fuck_get_p()
-    # print_data()
-    # insert_data()
 
 
 if __name__ == '__main__':
