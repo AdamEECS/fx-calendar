@@ -52,7 +52,7 @@ def get_news(max_time):
 
     r = requests.get(url, headers=headers)
     r = r.content.decode(encoding='utf-8')
-    log(r)
+    log('r.content', r[:120])
     try:
         r = r.split('(', 1)[1][:-2]
         r = json.loads(r)
