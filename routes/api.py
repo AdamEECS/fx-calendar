@@ -1,6 +1,7 @@
 from . import *
 from models.event import Event
 from models.detail import Detail
+from models.history import History
 from models.news import News
 from models.rate import Rate
 import datetime
@@ -31,13 +32,24 @@ def events_search():
 
 
 @main.route('/event/detail', methods=['GET'])
-def events_detail():
+def event_detail():
     ticker = request.args.get('ticker')
     response = None
     if ticker is not None:
         detail = Detail.find_one(ticker=ticker)
         if detail is not None:
             response = detail.json()
+    return json.dumps(response, indent=4)
+
+
+@main.route('/event/history', methods=['GET'])
+def event_history():
+    ticker = request.args.get('ticker')
+    response = None
+    if ticker is not None:
+        detail = History.recent_by_ticker(ticker=ticker)
+        if detail is not None:
+            response = [i.json() for i in detail]
     return json.dumps(response, indent=4)
 
 
