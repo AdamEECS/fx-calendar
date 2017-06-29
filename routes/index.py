@@ -54,3 +54,45 @@ def news_after(last_time_int):
 def rates():
     rs = Rate.all()
     return render_template('rates.html', items=rs)
+
+
+@main.route('/news/structure', methods=['GET'])
+def structured_news():
+    keys = [
+        {
+            'title': '国家地区',
+            'items': ['中国', '美国', '日本', '俄罗斯', '韩国', '英国', '欧盟', '德国', '法国', '瑞士', '意大利'],
+        },
+        {
+            'title': '交易品种',
+            'items': ['黄金', '原油', '天然气', '美元', '欧元', '英镑', '日元'],
+        },
+        {
+            'title': '消息机构',
+            'items': ['央行', '美联储', '外交部', '交易所', '国防部', '证监会', '发改委', 'MSCI', '路透'],
+        },
+        {
+            'title': '新闻人物',
+            'items': ['李克强', '特雷莎·梅', '特朗普', '耶伦', '默克尔', '哈蒙德', '伊丽莎白二世', '安倍晋三'],
+        },
+        {
+            'title': '热门事件',
+            'items': ['上涨', '下跌', '开盘', '收盘', '地震', '脱欧', '制裁', '发布报告', '谈判'],
+        },
+    ]
+    keyword = request.args.get('q')
+    if keyword is not None:
+        items = News.content(keyword)
+    else:
+        items = News.recent()
+    return render_template('structured_news.html', items=items, keys=keys)
+
+# @main.route('/news/structure', methods=['GET'])
+# def structured_news_search():
+#     keyword = request.args.get('keyword')
+#     form = dict(title_content=keyword)
+#     print(form)
+#     items = Event.search_and(form)
+#     print(items)
+#     last_time_int = items[0].time_int
+#     return render_template('structured_news.html', items=items, last_time_int=last_time_int)

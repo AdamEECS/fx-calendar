@@ -31,6 +31,8 @@ def news_clear(news):
         '<a',
         '<script',
         '金十',
+        '午读',
+        '推荐阅读',
     ]
     content = news.get('title_content')
     if content is None:

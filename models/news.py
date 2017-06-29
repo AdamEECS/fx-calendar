@@ -88,6 +88,12 @@ class News(MongoModel):
         data = data[:limit]
         return data
 
+    @classmethod
+    def content(cls, q):
+        items = cls.find(title_content={'$regex': q, '$options': '$i'})
+        items = items[:50]
+        return items
+
     def blacklist(self):
         b = [
             'url',

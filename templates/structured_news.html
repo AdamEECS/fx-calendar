@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <h1>新闻引擎</h1>
+
+    <nav class="navbar navbar-default">
+
+        {% for key in keys %}
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">{{ key.title }}</span>
+                    <span class="navbar-brand">丨</span>
+                    {% for i in key['items'] %}
+                        <a class="navbar-brand" href="{{ url_for('index.structured_news', q=i ) }}">
+                            {{ i }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+    </nav>
+
+    <div class="container-fluid table-hover">
+
+
+        <div class="news-container" data-last-time-int="{{ last_time_int }}">
+
+            {% for i in items %}
+
+                <div class="item-container" data-time-int={{ i.time_int }}>
+                    <div class="event-item row">
+
+                        <div>{{ i.time_show }}</div>
+                        <div>{{ i.title_content | safe }}</div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+    <script>
+        const log = console.log.bind(console)
+
+        {#        const country = ['中国', '美国', '日本', '俄罗斯', '韩国']#}
+        {##}
+        {#        const temp = function (word) {#}
+        {#            let t = `<a class="navbar-brand" href="{{ url_for('index.structured_news') }}?q=${word}">#}
+        {#                    ${word}#}
+        {#                </a>`#}
+        {#            return t#}
+        {#        }#}
+        {##}
+        {#        const init = function () {#}
+        {#            log('init')#}
+        {#            country.map(function (i) {#}
+        {#                let item = temp(i)#}
+        {#                $('.search-country').append(item)#}
+        {#            })#}
+        {#        }#}
+
+        init()
+
+
+    </script>
+{% endblock %}
