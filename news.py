@@ -51,8 +51,9 @@ def get_news(max_time):
         _=1497502825618,
     )
     url = url_base + urlencode(param)
-
+    log('url', url)
     r = requests.get(url, headers=headers)
+    log('r', r)
     r = r.content.decode(encoding='utf-8')
     log('r.content', r[:120])
     try:
