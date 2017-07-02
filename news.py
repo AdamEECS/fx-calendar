@@ -33,6 +33,8 @@ def news_clear(news):
         '金十',
         '午读',
         '推荐阅读',
+        '交易智慧',
+        '辛闻社',
     ]
     content = news.get('title_content')
     if content is None:
@@ -52,7 +54,7 @@ def get_news(max_time):
     )
     url = url_base + urlencode(param)
     log('url', url)
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=3)
     log('r', r)
     r = r.content.decode(encoding='utf-8')
     log('r.content', r[:120])
@@ -92,7 +94,7 @@ def timer(delta, procedure):
         try:
             log('**************** procedure *****************')
             procedure()
-        except requests.exceptions.ConnectionError as e:
+        except BaseException as e:
             print(time_str(timestamp()), 'error', e)
             log('[timer e]', e)
         time.sleep(delta)
