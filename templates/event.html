@@ -68,6 +68,13 @@
 
     </div>
     <script>
+        const log = console.log.bind(console)
+        var formatData = function (data) {
+            if (data.indexOf('%') > -1){
+                data =  data.replace('%', '')
+            }
+            return data
+        }
         $('.event-has-detail').click(function (event) {
             var self = $(event.target)
             var parent = self.closest('.item-container')
@@ -80,10 +87,10 @@
                 return i.human_date.split(' ')[0]
             })
             var actual = data.map(function (i) {
-                return i.actual
+                return formatData(i.actual)
             })
             var forecast = data.map(function (i) {
-                return i.forecast
+                return formatData(i.forecast)
             })
             var title = chart.data('title')
             var myChart = echarts.init(chart[0]);
