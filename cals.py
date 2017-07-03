@@ -29,7 +29,7 @@ def log(*args):
 
 def get_event(start=1496246400, delta=604800):
     url = 'https://api-prod.wallstreetcn.com/apiv1/finfo/calendars?start={}&end={}'.format(start, start + delta)
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=5)
     r = r.content.decode(encoding='utf-8')
     log(r[:120])
     r = json.loads(r)

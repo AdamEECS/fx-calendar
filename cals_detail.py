@@ -56,7 +56,7 @@ def init_detail():
 
 
 def data_from_url(url):
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=5)
     r = r.content.decode(encoding='utf-8')
     r = json.loads(r)
     data = r.get('data')
