@@ -102,7 +102,7 @@ def timer(delta, procedure):
 
 def main():
     print('start')
-    timer(3, fuck_get)
+    timer(10, fuck_get)
     # fuck_get_p()
 
 
