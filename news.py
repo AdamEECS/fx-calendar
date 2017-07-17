@@ -54,7 +54,7 @@ def get_news(max_time):
     )
     url = url_base + urlencode(param)
     log('url', url)
-        proxies = {
+    proxies = {
         "http": "http://45.76.161.128:33333",
         "https": "http://45.76.161.128:33333",
     }
