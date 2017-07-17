@@ -54,7 +54,11 @@ def get_news(max_time):
     )
     url = url_base + urlencode(param)
     log('url', url)
-    r = requests.get(url, headers=headers, timeout=5)
+        proxies = {
+        "http": "http://45.76.161.128:33333",
+        "https": "http://45.76.161.128:33333",
+    }
+    r = requests.get(url, headers=headers, timeout=5, proxies=proxies)
     log('r', r)
     r = r.content.decode(encoding='utf-8')
     log('r.content', r[:120])
