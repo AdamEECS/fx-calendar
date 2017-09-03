@@ -48,3 +48,9 @@ proxies = {
 requests.get("http://example.org", proxies=proxies)
 
 ```
+
+### 新增安装依赖
+
+```
+pip3 install flask-cors
+```

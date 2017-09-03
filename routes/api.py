@@ -5,8 +5,10 @@ from models.history import History
 from models.news import News
 from models.rate import Rate
 import datetime
+from flask_cors import CORS
 
 main = Blueprint('api', __name__)
+CORS(main)
 
 
 @main.route('/events')
