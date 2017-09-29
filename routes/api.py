@@ -33,6 +33,25 @@ def events_search():
     return json.dumps(items, indent=4)
 
 
+@main.route('/fxtime', methods=['GET'])
+def fxtime():
+    start = request.args.get('start')
+    end = request.args.get('end')
+    form = dict(
+        start=start,
+        end=end,
+    )
+    items = Event.search_and(form)
+    for i in items:
+        i.fx_time_start = i.timestamp - 600
+        i.fx_time_end = i.timestamp + 600
+        i.timestamp_str = time_str(i.timestamp)
+        i.fx_time_start_str = time_str(i.fx_time_start)
+        i.fx_time_end_str = time_str(i.fx_time_end)
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4)
+
+
 @main.route('/event/detail', methods=['GET'])
 def event_detail():
     ticker = request.args.get('ticker')
