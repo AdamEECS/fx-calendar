@@ -36,3 +36,8 @@ def timestamp_today():
     end_dt = datetime.datetime.combine(datetime.date.today(), datetime.time.max).timetuple()
     end = int(time.mktime(end_dt))
     return start, end
+
+
+def log(*args):
+    with open("log_app.txt", 'a+', encoding='utf8') as f:
+        print(time_str(timestamp()), *args, file=f)
