@@ -129,7 +129,7 @@ class User(MongoModel):
         for i in args:
             i['deleted'] = i.pop('deleted', False)
             search['$or'].append(i)
-        ds = db[name].find(search)
+        ds = db[name].find(search).limit(1000)
         l = [cls._new_with_bson(d) for d in ds]
         return l
 
@@ -141,7 +141,7 @@ class User(MongoModel):
             i['deleted'] = i.pop('deleted', False)
             search['$and'].append(i)
         # print(search)
-        ds = db[name].find(search)
+        ds = db[name].find(search).limit(1000)
         l = [cls._new_with_bson(d) for d in ds]
         return l
 

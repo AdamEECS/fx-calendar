@@ -58,7 +58,8 @@ def get_news(max_time):
         "http": "http://45.76.161.128:33333",
         "https": "http://45.76.161.128:33333",
     }
-    r = requests.get(url, headers=headers, timeout=5, proxies=proxies)
+    # r = requests.get(url, headers=headers, timeout=5, proxies=proxies)
+    r = requests.get(url, headers=headers, timeout=5)
     log('r', r)
     r = r.content.decode(encoding='utf-8')
     log('r.content', r[:120])
@@ -106,7 +107,7 @@ def timer(delta, procedure):
 
 def main():
     print('start')
-    timer(10, fuck_get)
+    timer(20, fuck_get)
     # fuck_get_p()
 
 
