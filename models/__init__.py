@@ -116,7 +116,7 @@ class User(MongoModel):
         flag_sort = '__sort'
         sort = kwargs.pop(flag_sort, None)
         ds = db[name].find(kwargs).limit(1000)
-        log('cls:', name, 'count:', ds.count())
+        # log('cls:', name, 'count:', ds.count())
         if sort is not None:
             ds = ds.sort(sort)
         l = [cls._new_with_bson(d) for d in ds]
