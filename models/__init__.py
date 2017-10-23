@@ -115,7 +115,7 @@ class User(MongoModel):
         kwargs['deleted'] = kwargs.pop('deleted', False)
         flag_sort = '__sort'
         sort = kwargs.pop(flag_sort, None)
-        ds = db[name].find(kwargs)
+        ds = db[name].find(kwargs).limit(10000)
         log('cls:', name, 'count:', ds.count())
         if sort is not None:
             ds = ds.sort(sort)
