@@ -118,8 +118,7 @@ def article_list(category):
 @main.route('/article/<article_id>', methods=['GET'])
 def article(article_id):
     items = ArticleDetail.find_one(article_id=article_id)
-    items = [i.json() for i in items]
-    return json.dumps(items, indent=4)
+    return json.dumps(items.json(), indent=4)
 
 
 @main.route('/article/list/all', methods=['GET'])
