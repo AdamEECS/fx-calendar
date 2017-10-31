@@ -76,7 +76,7 @@ def get_article_list(url, selector):
 
 
 def article_detail(div, a_id):
-    title = div('h1.articleHeader').text()
+    title = div('h1').text()
     datetime = div('div.contentSectionDetails')('span').text()
     if '(' in datetime and ')' in datetime:
         datetime = datetime.split('(')[1].split(')')[0]

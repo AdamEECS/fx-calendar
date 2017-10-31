@@ -60,3 +60,17 @@ pip3 install flask-cors
 ```
 pip3 install pyquery
 ```
+
+### 增加supervisor启动项
+
+```
+ln -s /var/www/fx-calendar/config/supervisor-arts.conf /etc/supervisor/conf.d/arts.conf
+
+supervisorctl reread
+
+supervisorctl update
+
+supervisorctl reload
+
+
+```

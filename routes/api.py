@@ -117,6 +117,32 @@ def article_list(category):
 
 @main.route('/article/<article_id>', methods=['GET'])
 def article(article_id):
-    items = ArticleDetail.find(article_id=article_id)
+    items = ArticleDetail.find_one(article_id=article_id)
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)
+
+
+@main.route('/article/list/all', methods=['GET'])
+def article_list_all():
+    items = Article.all()
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4, ensure_ascii=False)
+
+
+@main.route('/article/all', methods=['GET'])
+def article_all():
+    items = ArticleDetail.all()
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4, ensure_ascii=False)
+
+
+@main.route('/article/all/del', methods=['GET'])
+def article_all_del():
+    items = ArticleDetail.all()
+    items = [i for i in items if i.title == '']
+    for i in items:
+        i.delete()
+        a = Article.find_one(article_id=i.article_id)
+        a.detailed = False
+        a.save()
+    return 'ok'
