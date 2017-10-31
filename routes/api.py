@@ -4,6 +4,7 @@ from models.detail import Detail
 from models.history import History
 from models.news import News
 from models.rate import Rate
+from models.article import Article, ArticleDetail
 import datetime
 from flask_cors import CORS
 
@@ -103,5 +104,19 @@ def news_after(last_time_int):
 @main.route('/rates', methods=['GET'])
 def rates():
     items = Rate.all()
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4)
+
+
+@main.route('/article/list/<category>', methods=['GET'])
+def article_list(category):
+    items = Article.find(category=category)
+    items = [i.json() for i in items]
+    return json.dumps(items, indent=4)
+
+
+@main.route('/article/<article_id>', methods=['GET'])
+def article(article_id):
+    items = ArticleDetail.find(article_id=article_id)
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)

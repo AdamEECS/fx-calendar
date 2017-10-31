@@ -54,3 +54,9 @@ requests.get("http://example.org", proxies=proxies)
 ```
 pip3 install flask-cors
 ```
+
+### 新增pyquery
+
+```
+pip3 install pyquery
+```

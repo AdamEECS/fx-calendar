@@ -1,3 +1,4 @@
+cache/*
 config/key.py
 demo/*.gif
 api.md
