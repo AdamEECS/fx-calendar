@@ -77,7 +77,7 @@ def get_article_list(url, selector):
 
 def article_detail(div, a_id):
     title = div('h1').text()
-    datetime = div('div.contentSectionDetails')('span').text()
+    datetime = div('div.contentSectionDetails')('span').eq(-1).text()
     author = div('div.contentSectionDetails')('a').eq(0).text()
     i = div('div.contentSectionDetails')('i')
     if i.length > 0:
@@ -138,6 +138,9 @@ def task():
 def main():
     print('start')
     timer(3600, task)
+    # get_article_detail('https://cn.investing.com/news/forex-news/article-504292')
+    # get_article_detail('https://cn.investing.com/analysis/article-200218830')
+    # get_article_detail('https://cn.investing.com/analysis/article-200218926')
 
 if __name__ == '__main__':
     main()
