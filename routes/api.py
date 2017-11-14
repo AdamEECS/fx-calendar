@@ -111,6 +111,11 @@ def rates():
 @main.route('/article/list/<category>', methods=['GET'])
 def article_list(category):
     items = Article.find(category=category)
+    for i in items:
+        d = ArticleDetail.find_one(article_id=i.article_id)
+        if d is not None:
+            i.author = d.auther
+            i.datetime = d.datetime
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)
 
@@ -144,4 +149,14 @@ def article_all_del():
         a = Article.find_one(article_id=i.article_id)
         a.detailed = False
         a.save()
+    return 'ok'
+
+
+@main.route('/article/del/<article_id>', methods=['GET'])
+def article_del(article_id):
+    detail = ArticleDetail.find_one(article_id=article_id)
+    a = Article.find_one(article_id=article_id)
+    detail.delete()
+    a.detailed = False
+    a.save()
     return 'ok'
