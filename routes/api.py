@@ -129,6 +129,11 @@ def article(article_id):
 @main.route('/article/list/all', methods=['GET'])
 def article_list_all():
     items = Article.all()
+    for i in items:
+        d = ArticleDetail.find_one(article_id=i.article_id)
+        if d is not None:
+            i.author = d.author
+            i.datetime = d.datetime
     items = [i.json() for i in items]
     return json.dumps(items, indent=4, ensure_ascii=False)
 
