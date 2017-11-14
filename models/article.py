@@ -25,6 +25,7 @@ class ArticleDetail(MongoModel):
             ('article_id', str, ''),
             ('title', str, ''),
             ('datetime', str, ''),
+            ('author', str, 'Investing.com'),
             ('content', str, ''),
         ]
         fields.extend(super()._fields())

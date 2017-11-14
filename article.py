@@ -78,12 +78,18 @@ def get_article_list(url, selector):
 def article_detail(div, a_id):
     title = div('h1').text()
     datetime = div('div.contentSectionDetails')('span').text()
+    author = div('div.contentSectionDetails')('a').eq(0).text()
+    i = div('div.contentSectionDetails')('i')
+    if i.length > 0:
+        src = i('img').attr('src')
+        author = src.split('/')[-1].split('.')[0]
     if '(' in datetime and ')' in datetime:
         datetime = datetime.split('(')[1].split(')')[0]
     content = div('div.WYSIWYG').html()
     d = {
         'article_id': a_id,
         'title': title,
+        'author': author,
         'datetime': datetime,
         'content': content,
     }
@@ -132,7 +138,6 @@ def task():
 def main():
     print('start')
     timer(3600, task)
-
 
 if __name__ == '__main__':
     main()
