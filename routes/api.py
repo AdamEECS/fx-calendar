@@ -114,7 +114,7 @@ def article_list(category):
     for i in items:
         d = ArticleDetail.find_one(article_id=i.article_id)
         if d is not None:
-            i.author = d.auther
+            i.author = d.author
             i.datetime = d.datetime
     items = [i.json() for i in items]
     return json.dumps(items, indent=4)
