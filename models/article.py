@@ -30,3 +30,15 @@ class ArticleDetail(MongoModel):
         ]
         fields.extend(super()._fields())
         return fields
+
+    @classmethod
+    def find(cls, **kwargs):
+        ms = super().find(**kwargs)
+        # print(ms)
+        for m in ms:
+            import re
+            m.content = re.sub('(style=").*?(")', '', m.content)
+            m.content = re.sub('(<a).*?(>)', '', m.content)
+            m.content = re.sub('(</a>)', '', m.content)
+            m.content = m.content.replace('（以上为分析师个人观点，不代表Investing.com观点，不作为投资建议。）', '')
+        return ms
