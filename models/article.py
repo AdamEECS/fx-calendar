@@ -41,4 +41,5 @@ class ArticleDetail(MongoModel):
             m.content = re.sub('(<a).*?(>)', '', m.content)
             m.content = re.sub('(</a>)', '', m.content)
             m.content = m.content.replace('（以上为分析师个人观点，不代表Investing.com观点，不作为投资建议。）', '')
+            m.content = m.content.replace('investing.com', '')
         return ms
