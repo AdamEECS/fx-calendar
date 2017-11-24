@@ -85,8 +85,10 @@ def article_detail(div, a_id):
     datetime = div('div.contentSectionDetails')('span').eq(-1).text()
     author = div('div.contentSectionDetails')('a').eq(0).text()
     i = div('div.contentSectionDetails')('i')
+
     if i.length > 0:
         src = i('img').attr('src')
+        log('i', i, src)
         author = src.split('/')[-1].split('.')[0]
     if '(' in datetime and ')' in datetime:
         datetime = datetime.split('(')[1].split(')')[0]
