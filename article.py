@@ -85,11 +85,12 @@ def article_detail(div, a_id):
     datetime = div('div.contentSectionDetails')('span').eq(-1).text()
     author = div('div.contentSectionDetails')('a').eq(0).text()
     i = div('div.contentSectionDetails')('i')
-    log('title', title)
     if i.length > 0:
         src = i('img').attr('src')
-        log('i', i, src)
-        author = src.split('/')[-1].split('.')[0]
+        if src is not None:
+            author = src.split('/')[-1].split('.')[0]
+        else:
+            author = 'Investing.com'
     if '(' in datetime and ')' in datetime:
         datetime = datetime.split('(')[1].split(')')[0]
     content = div('div.WYSIWYG').html()
@@ -119,8 +120,8 @@ def get_article_detail(url):
 
 def get_article_all():
     arts = Article.find(detailed=False)
+    log('len of arts', len(arts))
     for a in arts:
-        log(a)
         get_article_detail(a.url_full)
         time.sleep(1)
 
