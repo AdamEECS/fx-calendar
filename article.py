@@ -18,6 +18,11 @@ headers = {
 }
 
 
+def log(*args):
+    with open("log_news.txt", 'a+', encoding='utf8') as f:
+        print(time_str(timestamp()), *args, file=f)
+
+
 def cache_html(url):
     # filename = url.split('/')[-1]
     # cache = 'cache/{}.html'.format(filename)
@@ -113,6 +118,7 @@ def get_article_detail(url):
 def get_article_all():
     arts = Article.find(detailed=False)
     for a in arts:
+        log(a)
         get_article_detail(a.url_full)
         time.sleep(1)
 
@@ -123,7 +129,7 @@ def timer(delta, procedure):
         try:
             procedure()
         except BaseException as e:
-            print(time_str(timestamp()), 'error', e)
+            log('error', e)
         time.sleep(delta)
 
 
@@ -141,6 +147,7 @@ def main():
     # get_article_detail('https://cn.investing.com/news/forex-news/article-504292')
     # get_article_detail('https://cn.investing.com/analysis/article-200218830')
     # get_article_detail('https://cn.investing.com/analysis/article-200218926')
+
 
 if __name__ == '__main__':
     main()
