@@ -123,7 +123,10 @@ def article_list(category):
 @main.route('/article/<article_id>', methods=['GET'])
 def article(article_id):
     items = ArticleDetail.find_one(article_id=article_id)
-    return json.dumps(items.json(), indent=4)
+    if items is not None:
+        return json.dumps(items.json(), indent=4)
+    else:
+        abort(404)
 
 
 @main.route('/article/list/all', methods=['GET'])
