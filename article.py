@@ -19,7 +19,7 @@ headers = {
 
 
 def log(*args):
-    with open("log_news.txt", 'a+', encoding='utf8') as f:
+    with open("log_arts.txt", 'a+', encoding='utf8') as f:
         print(time_str(timestamp()), *args, file=f)
 
 
