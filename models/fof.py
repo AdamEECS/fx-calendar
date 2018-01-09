@@ -35,3 +35,9 @@ class Fof(MongoModel):
         ]
         fields.extend(super()._fields())
         return fields
+
+'''
+export
+
+mongoexport -d mongo_fx_calendar -c Fof --type=csv -o 1.csv --query '{index:{$gt:0}}' --limit 1000 -f index,fundId,fundName,orgId,orgName,region,structureForm,stypeCodeName1,stypeCodeName3,fundStatus,fundMember,fundNameFlag,addedNav,maxRetracement,sharpA,investmentTarget,nav,navDate,isInternal,intervalReturn,statisticDate,dataFreq,pY,foundationDate,stdevA,returnA
+'''
