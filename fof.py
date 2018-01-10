@@ -35,7 +35,7 @@ def get_fof(page=1, rows=20):
     r = requests.post(url, data=data, headers=headers)
     r = r.content.decode(encoding='utf-8-sig')
     r = json.loads(r)
-    print(r)
+    # print(r)
     # with open('temp.txt', 'w+', encoding='utf-8') as f:
     #     json.dump(r, f, indent=4, ensure_ascii=False)
     rows = r.get('rows', None)
