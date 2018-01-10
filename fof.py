@@ -35,6 +35,7 @@ def get_fof(page=1, rows=20):
     r = requests.post(url, data=data, headers=headers)
     r = r.content.decode(encoding='utf-8-sig')
     r = json.loads(r)
+    print(r)
     # with open('temp.txt', 'w+', encoding='utf-8') as f:
     #     json.dump(r, f, indent=4, ensure_ascii=False)
     rows = r.get('rows', None)
@@ -58,7 +59,7 @@ def timer(delta, procedure):
 
 
 def task():
-    start = 111
+    start = 131
     for i in range(161 - start):
         print(start + i)
         get_fof(page=start + i, rows=1000)
