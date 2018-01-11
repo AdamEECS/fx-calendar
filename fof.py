@@ -50,7 +50,7 @@ def get_fof(page=1, rows=20):
 
 def timer(delta, procedure):
     while True:
-        # print(int(time.time()))
+        print(int(time.time()))
         try:
             procedure()
         except BaseException as e:
