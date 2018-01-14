@@ -59,7 +59,7 @@ def timer(delta, procedure):
 
 
 def task():
-    start = 154
+    start = 160
     for i in range(161 - start):
         print(start + i)
         get_fof(page=start + i, rows=1000)
